@@ -20,7 +20,8 @@ sudo apt-mark hold kubelet kubeadm kubectl
 # use the command 
 kubeadm init --pod-network-cidr "10.244.0.0/16" --cri-socket "unix:///var/run/cri-dockerd.sock"
 # Copy the token generated after finishing the above command like the below.
-NotReady
+kubeadm join 172.31.40.28:6443 --token cmihte.9e1vqpq57uxkluri \
+        --discovery-token-ca-cert-hash sha256:8ec1ac56aff113650ac613d06b31e21514555fbfb38e671b2f88897ce14deef5
 
 # Switch to normal user if you running as root user and execute below commands:
 mkdir -p $HOME/.kube
@@ -32,8 +33,13 @@ kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/
 kubectl get nodes => will be ready
 
 #####################  To do on Worker Node 1 #######################
-# Run the command in the worker node  " 
+# Run the command in the worker node  (copy the token generated above) + --crio-socket ...
+kubeadm join 172.31.40.28:6443 --token cmihte.9e1vqpq57uxkluri \
+        --discovery-token-ca-cert-hash sha256:8ec1ac56aff113650ac613d06b31e21514555fbfb38e671b2f88897ce14deef5 --cri-socket "unix:///var/run/cri-dockerd.sock"
+######### ignore the below ########	
+" 
 kubeadm join 172.31.46.162:6443 --token onuurh.ajdjohao4og0fuvg \ --discovery-token-ca-cert-hash sha256:48ef0a455dab45986f74141f2267e77558ad8d3cd7f678ea8d12bf8c741d2f2a --cri-socket "unix:///var/run/cri-dockerd.sock" "
+######### ignore till here ########
 	• Comment above in bold is from execution of a command and needs to be copied from the output of the command below is the output:
 		To start using your cluster, you need to run the following as a regular user:
 		
