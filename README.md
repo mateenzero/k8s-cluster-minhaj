@@ -17,16 +17,18 @@ sudo apt-get update -y
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
-#use the command 
+# use the command 
 kubeadm init --pod-network-cidr "10.244.0.0/16" --cri-socket "unix:///var/run/cri-dockerd.sock"
-Switch to normal user if you running as root user and execute below commands:
+# Copy the token generated after finishing the above command like the below.
 
-	mkdir -p $HOME/.kube
+# Switch to normal user if you running as root user and execute below commands:
+mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-
-• Run the command in the worker node  " kubeadm join 172.31.46.162:6443 --token onuurh.ajdjohao4og0fuvg \ --discovery-token-ca-cert-hash sha256:48ef0a455dab45986f74141f2267e77558ad8d3cd7f678ea8d12bf8c741d2f2a --cri-socket "unix:///var/run/cri-dockerd.sock" "
+#####################  To do on Worker Node 1 #######################
+# Run the command in the worker node  " 
+kubeadm join 172.31.46.162:6443 --token onuurh.ajdjohao4og0fuvg \ --discovery-token-ca-cert-hash sha256:48ef0a455dab45986f74141f2267e77558ad8d3cd7f678ea8d12bf8c741d2f2a --cri-socket "unix:///var/run/cri-dockerd.sock" "
 	• Comment above in bold is from execution of a command and needs to be copied from the output of the command below is the output:
 		To start using your cluster, you need to run the following as a regular user:
 		
